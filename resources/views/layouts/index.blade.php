@@ -91,9 +91,6 @@
             <div class="dropdown">
                 <div>{{\Illuminate\Support\Facades\Auth::user()->name}}</div>
                 <div class="dropdown-content">
-                    <a href="/admin" class="btn">
-                        dashboard
-                    </a>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button type="submit" class="btn">Logout</button>

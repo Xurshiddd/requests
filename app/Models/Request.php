@@ -16,6 +16,7 @@ class Request extends Model
         'room',
         'floor',
         'building',
-        'status'
+        'status',
+        'confirm'
     ];
 }

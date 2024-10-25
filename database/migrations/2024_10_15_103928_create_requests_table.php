@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('floor')->nullable();
             $table->integer('building')->nullable();
             $table->enum('status',['new', 'progress', 'done', 'failed'])->default('new');
+            $table->boolean('confirm')->default(false);
             $table->timestamps();
         });
     }

@@ -59,6 +59,9 @@
                 <th>Xona</th>
                 <th>Holat</th>
                 <th>Yaratilgan vaqt</th>
+                @can('tasdiqlash')
+                <th>Tasdiq</th>
+                @endcan
                 <th>Xarakat</th>
             </tr>
             </thead>
@@ -80,6 +83,11 @@
                         @endcan
                     </td>
                     <td>{{$value->created_at}}</td>
+                    @can('tasdiqlash')
+                        <td>
+                            <input type="checkbox" class="form-checkbox check" id="{{$value->id}}" @if($value->confirm == true) checked disabled @endif onclick="return confirm('Rostdan ham tanlamoqchimisiz ?')">
+                        </td>
+                    @endcan
                     <td>
                         <button class="btn btn-primary" id="show" onclick="openpopap({{$value->id}})">Ochish</button>
                         <form action="">
@@ -120,9 +128,26 @@
                 var id = $(this).attr('id');
                 changeStatus(id, status);
             });
+            $(".check").change(function (){
+                var Token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                var id = $(this).attr('id');
+                $.ajax({
+                    url: '/admin/confirm',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        _token: Token
+                    },
+                    success: function (res) {
+                        alert(res.message)
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }
+                });
+            })
         });
         function changeStatus(id, status) {
-            // Get CSRF token from the meta tag
             var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
             $.ajax({
@@ -141,6 +166,7 @@
                 }
             });
         }
+
 
         function formSubmit(name) {
             if (name == 'hammasi') {

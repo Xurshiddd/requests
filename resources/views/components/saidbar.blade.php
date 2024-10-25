@@ -5,10 +5,7 @@
                 <div class="user-img-div">
                     {{ \Illuminate\Support\Facades\Auth::user()->name }}
                 </div>
-
             </li>
-
-
             <li>
                 <a class="active-menu" href="{{ route('admin') }}"><i class="fa fa-dashboard "></i>Dashboard</a>
             </li>
@@ -29,7 +26,7 @@
             </li>
             @endif
             <li>
-                <a href="#"><i class="fa fa-yelp "></i>So'rovlar <span class="fa arrow"></span></a>
+                <a href="#"><i class="fa-solid fa-code-pull-request"></i>So'rovlar <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
                     <li>
                         <a href="{{ route('requests.index') }}">Barcha so'rovlar</a>
@@ -37,7 +34,5 @@
                 </ul>
             </li>
         </ul>
-
     </div>
-
 </nav>

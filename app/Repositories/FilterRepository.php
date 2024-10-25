@@ -47,4 +47,13 @@ class FilterRepository extends Controller
             ]);
         }
     }
+
+    public function confirm(Request $request)
+    {
+        DB::table('requests')->where('id', $request->id)->update(['confirm' => true]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Request confirmed successfully'
+        ]);
+    }
 }
