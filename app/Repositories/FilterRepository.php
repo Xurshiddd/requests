@@ -36,10 +36,17 @@ class FilterRepository extends Controller
     {
         try {
             DB::table('requests')->where('id', $request->id)->update(['status' => $request->status]);
+            DB::table('audits')->insert([
+                'user_id' => auth()->user()->id,
+                'event' => 'request status updated',
+                'auditable_id' => $request->id,
+                'auditable_type' => 'App\Models\Request',
+            ]);
             return response()->json([
                 'success' => true,
                 'message' => 'Request status updated successfully'
             ]);
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
