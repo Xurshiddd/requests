@@ -75,10 +75,10 @@
                     <td>{{$value->room}}</td>
                     <td>@can('change-status')
                         <select class="form-control slct" id="{{$value->id}}">
-                            <option value="new" @if($value->status == 'new') selected @endif>new</option>
-                            <option value="progress" @if($value->status == 'progress') selected @endif>progress</option>
-                            <option value="done" @if($value->status == 'done') selected @endif>done</option>
-                            <option value="failed" @if($value->status == 'failed') selected @endif>failed</option>
+                            <option value="new" @if($value->status == 'new') selected @endif>Yangi</option>
+                            <option value="progress" @if($value->status == 'progress') selected @endif>Bajarilyapti</option>
+                            <option value="done" @if($value->status == 'done') selected @endif>Bajarildi</option>
+                            <option value="failed" @if($value->status == 'failed') selected @endif>Bajarilmadi</option>
                         </select>
                         @endcan
                     </td>
@@ -89,6 +89,7 @@
                         </td>
                     @endcan
                     <td>
+                        <button class="open-btn" data-id="{{ $value->id }}">Ochish2</button>
                         <button class="btn btn-primary" id="show" onclick="openpopap({{$value->id}})">Ochish</button>
                         <form action="">
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -98,6 +99,9 @@
             @endforeach
             </tbody>
         </table>
+    </div>
+    <div id="documentModal" style="display: none;">
+        <iframe id="documentIframe" width="100%" height="600px"></iframe>
     </div>
     <div style="display: none">
         <form action="" method="POST" id="frm">
@@ -111,6 +115,29 @@
             <button class="close-popup" onclick="closePopup()">Close</button>
         </div>
     </div>
+    <script>
+        document.querySelectorAll('.open-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                document.getElementById('documentIframe').src = `/document/${id}`;
+                document.getElementById('documentModal').style.display = 'block';
+            });
+        });
+
+        document.querySelectorAll('.sign-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                fetch(`/document/${id}/sign`, { method: 'POST' })
+                    .then(response => response.blob())
+                    .then(blob => {
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(blob);
+                        link.download = `document_${id}_signed.docx`;
+                        link.click();
+                    });
+            });
+        });
+    </script>
 @endsection
 @section('script')
 {{--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>--}}
@@ -124,7 +151,7 @@
         });
         $(document).ready(function () {
             $('.slct').change(function () {
-                var status = $(this).find('option:selected').text();
+                var status = $(this).find('option:selected').val();
                 var id = $(this).attr('id');
                 changeStatus(id, status);
             });

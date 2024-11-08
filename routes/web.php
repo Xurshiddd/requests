@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RequestController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -46,4 +47,6 @@ Route::middleware(['auth','role:Admin,SuperAdmin'])->prefix('admin')->group(func
     Route::post('/changestatus', [\App\Repositories\FilterRepository::class, 'changeStatus']);
     Route::post('/confirm', [\App\Repositories\FilterRepository::class, 'confirm']);
 });
+Route::get('/document/{id}', [DocumentController::class, 'openDocument'])->name('document.open');
+Route::post('/document/{id}/sign', [DocumentController::class, 'signDocument'])->name('document.sign');
 require __DIR__ . '/auth.php';

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -41,6 +42,8 @@ class FilterRepository extends Controller
                 'event' => 'request status updated',
                 'auditable_id' => $request->id,
                 'auditable_type' => 'App\Models\Request',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]);
             return response()->json([
                 'success' => true,
