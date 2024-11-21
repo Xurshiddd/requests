@@ -14,7 +14,8 @@ class RequestController extends Controller
     {
         $requests = DB::table('requests')
             ->leftJoin('kafedras', 'kafedras.id', '=', 'requests.kafedra_id')
-            ->select('requests.*', 'kafedras.name as name')
+            ->join('users', 'users.id', '=', 'requests.from')
+            ->select('requests.*', 'kafedras.name as name', 'users.name as user')
             ->latest()
             ->get();
         return view('requests.index', compact( 'requests'));
