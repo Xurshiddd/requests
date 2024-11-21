@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Repositories;
-
+use Carbon\Carbon;
+use PhpOffice\PhpWord\TemplateProcessor;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
+use Symfony\Component\HttpFoundation\StreamedResponse;
 class FilterRepository extends Controller
 {
     public function bugungi(Request $request)
@@ -56,4 +57,45 @@ class FilterRepository extends Controller
             'message' => 'Request confirmed successfully'
         ]);
     }
+
+    public function word($id)
+    {
+        $requests = DB::table('requests')
+            ->leftJoin('kafedras', 'kafedras.id', '=', 'requests.kafedra_id')
+            ->join('users', 'users.id', '=', 'requests.from')
+            ->select('requests.*', 'kafedras.name as name', 'users.name as user')
+            ->where('requests.id', '=', $id)
+            ->first();
+
+        // Load the template
+        $templateProcessor = new TemplateProcessor(public_path('sorovnoma.docx'));
+
+        // Set values in the template
+        $templateProcessor->setValue('name', $requests->name);
+        $templateProcessor->setValue('user', $requests->user);
+        $templateProcessor->setValue('building', $requests->building);
+        $templateProcessor->setValue('floor', $requests->floor);
+        $templateProcessor->setValue('room', $requests->room);
+        $templateProcessor->setValue('description', $requests->description);
+
+        // Format the date before setting the value
+        $templateProcessor->setValue('date', Carbon::parse($requests->created_at)->format('Y-m-d'));
+
+        // Generate file name
+        $fileName = 'sorovnoma' . time() . '.docx';
+
+        // Stream the document to the browser for download
+        $response = new StreamedResponse(function () use ($templateProcessor) {
+            $templateProcessor->saveAs('php://output');
+        });
+
+        // Set headers for the response
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $fileName . '"');
+        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+        $response->headers->set('Pragma', 'public');
+
+        return $response;
+    }
+
 }

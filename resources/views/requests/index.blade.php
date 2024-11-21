@@ -58,7 +58,7 @@
                         </td>
                     @endcan
                     <td>
-                        <div style="display: flex">
+                        <div style="display: flex; justify-content: space-around">
                             <div>
                                 <button class="btn btn-primary" id="show" onclick="openPopup({{$value->id}})">Ochish</button>
                             </div>
@@ -66,6 +66,9 @@
                                 <form action="">
                                     <button type="submit" class="btn btn-danger">O'chirish</button>
                                 </form>
+                            </div>
+                            <div>
+                                <a href="/admin/word/{{$value->id}}" class="btn btn-success">Yuklash</a>
                             </div>
                         </div>
                     </td>
@@ -96,7 +99,7 @@
             @can('tasdiqlash')
             <button onclick="confirmRequest()" id="imzo" data="" style="padding: 10px 20px; background: #4caf50; color: white; border: none; cursor: pointer;">Imzo</button>
             @endcan
-                <button onclick="closePopup()" style="padding: 10px 20px; background: #f44336; color: white; border: none; cursor: pointer; margin-left: 10px;">Yopish</button>
+            <button onclick="closePopup()" style="padding: 10px 20px; background: #f44336; color: white; border: none; cursor: pointer; margin-left: 10px;">Yopish</button>
         </div>
     </div>
 
@@ -146,7 +149,7 @@
             // Pop-upni ko'rsatish
             document.getElementById("popup").style.display = "block";
             var btn = document.getElementById('imzo');
-            if (data.confirm == 1){
+            if (data.confirm === 1){
                 btn.textContent = 'Imzolangan';
                 btn.disabled = true;
                 btn.style.pointerEvents = 'none';

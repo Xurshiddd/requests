@@ -20,6 +20,6 @@ class DatabaseSeeder extends Seeder
         $role = Role::create(['name' => 'SuperAdmin']);
         $role->givePermissionTo($permission->name);
         $user = User::where('id', 1)->first();
-        $user->assignRole('Super Admin');
+        $user->assignRole('SuperAdmin');
     }
 }

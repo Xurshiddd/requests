@@ -45,5 +45,6 @@ Route::middleware(['auth','role:Admin,SuperAdmin'])->prefix('admin')->group(func
     Route::post('/bajarilmagani', [\App\Repositories\FilterRepository::class, 'bajarilmagani']);
     Route::post('/changestatus', [\App\Repositories\FilterRepository::class, 'changeStatus']);
     Route::post('/confirm', [\App\Repositories\FilterRepository::class, 'confirm']);
+    Route::get('/word/{id}', [\App\Repositories\FilterRepository::class, 'word']);
 });
 require __DIR__ . '/auth.php';
