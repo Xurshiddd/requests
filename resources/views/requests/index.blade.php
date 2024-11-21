@@ -94,7 +94,7 @@
         </div>
         <div style="text-align: center; margin-top: 20px;">
             @can('tasdiqlash')
-            <button onclick="confirmRequest()" id="imzo" style="padding: 10px 20px; background: #4caf50; color: white; border: none; cursor: pointer;">Imzo</button>
+            <button onclick="confirmRequest()" id="imzo" data="" style="padding: 10px 20px; background: #4caf50; color: white; border: none; cursor: pointer;">Imzo</button>
             @endcan
                 <button onclick="closePopup()" style="padding: 10px 20px; background: #f44336; color: white; border: none; cursor: pointer; margin-left: 10px;">Yopish</button>
         </div>
@@ -135,34 +135,42 @@
         function openPopup(id) {
             let dat = @json($requests);
             let data = dat.find(item => item.id === id);
-            console.log(data)
             document.getElementById("popup-building").textContent = data.building;
             document.getElementById("kafedra").textContent = data.name;
             document.getElementById("mdr").textContent = data.user;
             document.getElementById("popup-room").textContent = data.room;
             document.getElementById("popup-description").textContent = data.description;
             document.getElementById("popup-create").textContent = data.created_at;
+            document.getElementById("imzo").setAttribute('data', data.id);
 
             // Pop-upni ko'rsatish
             document.getElementById("popup").style.display = "block";
+            var btn = document.getElementById('imzo');
             if (data.confirm == 1){
-                document.getElementById('imzo').textContent = 'Imzolangan';
-                document.getElementById('imzo').disabled = true;
+                btn.textContent = 'Imzolangan';
+                btn.disabled = true;
+                btn.style.pointerEvents = 'none';
+            }
+            else {
+                btn.textContent = 'Imzolash';
+                btn.disabled = false;
+                btn.style.pointerEvents = 'auto'
             }
         }
 
         function closePopup() {
-            // Pop-upni yashirish
             document.getElementById("popup").style.display = "none";
         }
 
         function confirmRequest() {
             var Token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const button = document.getElementById('imzo');
+            const dataValue = button.getAttribute('data');
             $.ajax({
                 url: '/admin/confirm',
                 method: 'POST',
                 data: {
-                    id: data.id,
+                    id: dataValue,
                     _token: Token
                 },
                 success: function (res) {
