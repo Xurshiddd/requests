@@ -5,7 +5,7 @@
 
     <div class="popup" id="popup">
         <button class="close" id="closePopup">&times;</button>
-        <video controls>
+        <video id="popupVideo" controls>
             <source src="{{asset('qollanma.mp4')}}" type="video/mp4">
             Sizning brauzeringiz ushbu videoni qo'llab-quvvatlamaydi.
         </video>
@@ -54,7 +54,7 @@
         const popup = document.getElementById('popup');
         const overlay = document.getElementById('overlay');
         const closePopupButton = document.getElementById('closePopup');
-
+        const video = document.getElementById('popupVideo');
         // Pop-up oynani ochish
         showPopupButton.addEventListener('click', () => {
             popup.style.display = 'block';
@@ -65,12 +65,16 @@
         closePopupButton.addEventListener('click', () => {
             popup.style.display = 'none';
             overlay.style.display = 'none';
+            video.pause(); // Videoni to'xtatish
+            video.currentTime = 0;
         });
 
         // Overlay ni bosganda oynani yopish
         overlay.addEventListener('click', () => {
             popup.style.display = 'none';
             overlay.style.display = 'none';
+            video.pause(); // Videoni to'xtatish
+            video.currentTime = 0;
         });
     </script>
     <style>

@@ -16,7 +16,7 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        if (Auth::check() && Auth::user()->hasRole($roles)||$request->url() == 'http://127.0.0.1:8000/admin/requests' && $request->method() == 'POST' || $request->method() == 'DELETE') {
+        if (Auth::check() && Auth::user()->hasRole($roles)||$request->url() == 'https://requests-test.uz/admin/requests' && $request->method() == 'POST' || $request->method() == 'DELETE') {
             return $next($request);
         }
 
