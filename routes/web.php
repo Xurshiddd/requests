@@ -20,8 +20,14 @@ Route::get('/dashboard', function () {
         return redirect()->route('admin');
     } elseif (auth()->user()->hasRole('User')) {
         $kafedras = DB::table('kafedras')->get();
-        $requests = DB::table('requests')->where('from', \Illuminate\Support\Facades\Auth::id())->get();
-        return view('layouts.index', compact('kafedras', 'requests'));
+        $requests = DB::table('requests')
+            ->leftJoin('kafedras', 'kafedras.id', '=', 'requests.kafedra_id')
+            ->join('users', 'users.id', '=', 'requests.from')
+            ->select('requests.*', 'kafedras.name as name', 'users.name as user')
+            ->where('requests.from', '=', auth()->id())
+            ->latest()
+            ->get();
+        return view('layouts.index', compact( 'requests', 'kafedras'));
     }
 })->middleware(['auth', 'verified'])->name('dashboard');
 

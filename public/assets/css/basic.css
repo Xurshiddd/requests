@@ -66,7 +66,7 @@ body {
 
 .navbar-cls-top .navbar-brand {
     color: #fff;
-    background: #202020;
+    background: white;
     width: 260px;
     text-align: center;
     height: 75px;
@@ -90,8 +90,8 @@ body {
 }
 
 .user-img-div {
-    padding: 20px;
-    background-color: #4380B8;
+    padding: 10px;
+    background-color: #4284ea;
 }
 
     .user-img-div img {
@@ -193,7 +193,7 @@ body {
 }
 
 .navbar-header {
-    background: #000000;
+    /*background: #000000;*/
 }
 
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {

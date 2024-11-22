@@ -6,7 +6,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/"><img src="https://ttysi.uz/assets/public/images/logo/logo-text.svg" style="max-width: 200px" alt="logo"></a>
+        <a class="navbar-brand" href="/"><img src="https://ttysi.uz/assets/public/images/logo/logo-text.svg" style="max-width: 180px" alt="logo"></a>
     </div>
 
     <div class="header-right">

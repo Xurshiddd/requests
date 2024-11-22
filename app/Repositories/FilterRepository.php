@@ -36,6 +36,13 @@ class FilterRepository extends Controller
     public function changeStatus(Request $request)
     {
         try {
+            $rq = DB::table('requests')->where('id', $request->id)->first();
+            if ($rq->status == 'done' && $request->status != 'done'){
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Bu so\'rovnoma bajarilgan o\'zgartirib bo\'lmaydi!'
+                ]);
+            }
             DB::table('requests')->where('id', $request->id)->update(['status' => $request->status]);
             return response()->json([
                 'success' => true,

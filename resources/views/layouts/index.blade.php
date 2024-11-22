@@ -72,11 +72,34 @@
             color: #FFFFFF;
             background-color: #00A4BD;
         }
+        #popup {
+            width: 500px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #popup h3 {
+            background: #f4f4f4;
+            padding: 10px;
+            margin: 0;
+            text-align: center;
+        }
+
+        #popup-content p {
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+        body {
+            background: linear-gradient(to right, red, yellow, green);
+            height: 100vh;
+            margin: 0;
+        }
     </style>
     <link href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background: #00A4BD">
     <div class="container container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -175,10 +198,28 @@
     @elseif($value->status == 'progress') color: yellow;
     @elseif($value->status == 'failed') color: red;
     @endif
-">{{ $value->status }}</td>
+">
+                                @switch($value->status)
+                                    @case('new')
+                                        Yangi
+                                        @break
+                                    @case('progress')
+                                        Bajarilyapti
+                                        @break
+                                    @case('done')
+                                        Bajarildi
+                                        @break
+                                    @case('failed')
+                                        Bajarilmadi
+                                        @break
+                                    @default
+                                        Noma'lum
+                                @endswitch
+                            </td>
+
                             <td>{{ $value->created_at }}</td>
                             <td style="display: flex">
-                                <button class="btn btn-primary" id="show" onclick="openpopap({{$value->id}})">Ochish</button>
+                                <button class="btn btn-primary" id="show" onclick="openPopup({{$value->id}})">Ochish</button>
                                 @if($value->status == 'new')
                                     <form action="{{route('requests.destroy', $value->id)}}" method="POST">
                                         @csrf
@@ -240,11 +281,28 @@
             </div>
         </div>
     </div>
-    <div class="popup-overlay" id="popup">
-        <div class="popup-content">
-            <div id="dt"></div>
-            <button class="close-popup" onclick="closePopup()">Close</button>
+</div>
+<div id="popup" style="display: none; position: fixed; top: 50%; left: 50%; width: 60%; transform: translate(-50%, -50%); background: white; border: 1px solid #ccc; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 1000;">
+    <h3 style="text-align: center;">So'rovnoma ko'rinishi</h3>
+    <div style="display: flex; justify-content: end">
+        <div style="flex-wrap: nowrap; width: 30%">
+            "Raqamli ta`lim texnologiyalari markazi" <br>
+            rahbari Sherzod Fayazovga <br>
+            <p id="kafedra" style="display: inline"></p> kafedrasi mudiri
+            <p id="mdr" style="display: inline"></p>dan
         </div>
+    </div>
+    <h4 class="text-center">So'rovnoma</h4>
+    <div id="popup-content">
+        <!-- Dinamik ma'lumotlar bu yerga kiritiladi -->
+        <p><strong>Bino:</strong> <span id="popup-building"></span></p>
+        <p><strong>Qavat:</strong> <span id="popup-floor"></span></p>
+        <p><strong>Xona:</strong> <span id="popup-room"></span></p>
+        <p><strong>Mazmuni:</strong> <span id="popup-description"></span></p>
+        <p><strong>Vaqt:</strong> <span id="popup-create"></span></p>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <button onclick="closePopup()" style="padding: 10px 20px; background: #f44336; color: white; border: none; cursor: pointer; margin-left: 10px;">Yopish</button>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -273,15 +331,23 @@
             errorAlert.classList.remove('show');  // Hide alert with Bootstrap fade out effect
         }
     }, 3000);
-    var data = @json($requests);
+    function openPopup(id) {
+        let dat = @json($requests);
+        let data = dat.find(item => item.id === id);
+        document.getElementById("popup-building").textContent = data.building;
+        document.getElementById("popup-floor").textContent = data.floor;
+        document.getElementById("kafedra").textContent = data.name;
+        document.getElementById("mdr").textContent = data.user;
+        document.getElementById("popup-room").textContent = data.room;
+        document.getElementById("popup-description").textContent = data.description;
+        document.getElementById("popup-create").textContent = data.created_at;
 
-    function openpopap(id){
-        var rq = data.find(item => item.id === id);
-        document.querySelector('#dt').innerHTML = rq.description
-        document.getElementById("popup").style.display = "flex";
+        // Pop-upni ko'rsatish
+        document.getElementById("popup").style.display = "block";
     }
+
     function closePopup() {
-        document.getElementById("popup").style.display = "none"; // Hide popup
+        document.getElementById("popup").style.display = "none";
     }
 </script>
 </body>

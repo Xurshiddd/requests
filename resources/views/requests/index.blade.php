@@ -91,6 +91,7 @@
         <div id="popup-content">
             <!-- Dinamik ma'lumotlar bu yerga kiritiladi -->
             <p><strong>Bino:</strong> <span id="popup-building"></span></p>
+            <p><strong>Qavat:</strong> <span id="popup-floor"></span></p>
             <p><strong>Xona:</strong> <span id="popup-room"></span></p>
             <p><strong>Mazmuni:</strong> <span id="popup-description"></span></p>
             <p><strong>Vaqt:</strong> <span id="popup-create"></span></p>
@@ -139,6 +140,7 @@
             let dat = @json($requests);
             let data = dat.find(item => item.id === id);
             document.getElementById("popup-building").textContent = data.building;
+            document.getElementById("popup-floor").textContent = data.floor;
             document.getElementById("kafedra").textContent = data.name;
             document.getElementById("mdr").textContent = data.user;
             document.getElementById("popup-room").textContent = data.room;
@@ -177,7 +179,8 @@
                     _token: Token
                 },
                 success: function (res) {
-                    alert(res.message)
+                    alert(res.message);
+                    location.reload();
                 },
                 error: function (xhr, status, error) {
                     alert(error);
@@ -207,7 +210,8 @@
                         _token: Token
                     },
                     success: function (res) {
-                        alert(res.message)
+                        alert(res.message);
+                        location.reload();
                     },
                     error: function (xhr, status, error) {
                         alert(error);
@@ -229,6 +233,7 @@
                 },
                 success: function (res) {
                     alert(res.message);
+                    location.reload();
                 },
                 error: function (xhr, status, error) {
                     console.error("Error:", error); // Log any errors
