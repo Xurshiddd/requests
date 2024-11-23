@@ -77,8 +77,7 @@ class FilterRepository extends Controller
         // Load the template
         $templateProcessor = new TemplateProcessor(public_path('sorovnoma.docx'));
 
-        // Set values in the template
-        $templateProcessor->setValue('name', $requests->name);
+        $templateProcessor->setValue('name', $this->changeText($requests->name));
         $templateProcessor->setValue('user', $requests->user);
         $templateProcessor->setValue('building', $requests->building);
         $templateProcessor->setValue('floor', $requests->floor);
@@ -104,5 +103,13 @@ class FilterRepository extends Controller
 
         return $response;
     }
-
+    private function changeText(string $text)
+    {
+        if (strpos($text, '(') !== false) {
+            $result = strstr($text, '(', true);
+        } else {
+            $result = $text; // Matnni o'zi qaytaradi
+        }
+        return $result;
+    }
 }

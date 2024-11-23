@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="https://ttysi.uz/assets/public/images/logo_black.svg"/>
     <title>TTYSI Requests</title>
 
     <!-- BOOTSTRAP STYLES-->
@@ -57,7 +58,7 @@
 <!-- /. WRAPPER  -->
 @yield('script')
 <div id="footer-sec" class="footer">
-    &copy; 2014 YourCompany | Design By : <a href="http://www.binarytheme.com/" target="_blank">BinaryTheme.com</a>
+    &copy; 2024 Raqamli ta`lim texnalogiyalari bo'limi!!!
 </div>
 @include('components.script')
 </div>

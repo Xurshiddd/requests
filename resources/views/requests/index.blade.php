@@ -13,7 +13,7 @@
         </div>
     </div>
     <div>
-        <table id="datatable" class="datatable">
+        <table id="datatable" class="table table-striped table-hover">
             <thead>
             <tr>
                 <th>#</th>

@@ -5,44 +5,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="https://ttysi.uz/assets/public/images/logo_black.svg"/>
     <title>Requests</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none; /* Hidden by default */
-            justify-content: center;
-            align-items: center;
-            z-index: 999; /* Ensure it stays on top */
-        }
-
-        /* Popup box */
-        .popup-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-
-        /* Close button */
-        .close-popup {
-            margin-top: 10px;
-            cursor: pointer;
-            padding: 5px 10px;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-
         .dropdown {
             display: inline-block;
             position: relative;
@@ -91,7 +58,7 @@
             line-height: 1.5;
         }
         body {
-            background: linear-gradient(to right, red, yellow, green);
+            background-image: url("{{asset('background-image.jpg')}}");
             height: 100vh;
             margin: 0;
         }
@@ -99,7 +66,7 @@
     <link href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background: #00A4BD">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: blue!important; color: white!important;">
     <div class="container container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,7 +75,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="#" style="color: white!important;">Home</a>
                 </li>
             </ul>
             <div class="dropdown">
@@ -116,7 +83,7 @@
                 <div class="dropdown-content">
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
-                        <button type="submit" class="btn">Logout</button>
+                        <button type="submit" class="btn btn-primary">Logout</button>
                     </form>
                 </div>
             </div>
@@ -163,7 +130,7 @@
         </div>
     </div>
     <div class="card mt-3">
-        <div class="card-header">
+        <div class="card-header text-center" style="color: blue; background-color: rgba(92,221,211,0.39); font-weight: 600">
             So'rovnomalar
         </div>
         <div class="card-body">
@@ -171,7 +138,7 @@
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
 
-                    <table id="Table_ID">
+                    <table id="Table_ID" class="table table-striped table-hover">
                         <thead>
                         <tr>
                             <th>#</th>

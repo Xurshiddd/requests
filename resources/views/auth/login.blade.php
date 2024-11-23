@@ -10,7 +10,7 @@
             Sizning brauzeringiz ushbu videoni qo'llab-quvvatlamaydi.
         </video>
     </div>
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login') }}" style="color: blue">
         @csrf
 
         <!-- Email Address -->
