@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    if (auth()->user()->hasRole('Admin') || auth()->user()->hasRole('SuperAdmin')) {
+    if (auth()->user()->hasRole(['Admin','SuperAdmin','Mudir'])) {
         return redirect()->route('admin');
     } elseif (auth()->user()->hasRole('User')) {
         $kafedras = DB::table('kafedras')->get();
@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
 //    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth','role:Admin,SuperAdmin'])->prefix('admin')->group(function () {
+Route::middleware(['auth','role:Admin,SuperAdmin,Mudir'])->prefix('admin')->group(function () {
     Route::resources([
         'roles' => RoleController::class,
         'permissions' => PermissionController::class,
