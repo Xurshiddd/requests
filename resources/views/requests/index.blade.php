@@ -98,11 +98,12 @@
         </div>
         <div style="text-align: center; margin-top: 20px;">
             @can('tasdiqlash')
-            <button onclick="confirmRequest()" id="imzo" data="" style="padding: 10px 20px; background: #4caf50; color: white; border: none; cursor: pointer;">Imzo</button>
+                <button onclick="confirmRequest()" id="imzo" data="" style="padding: 10px 20px; background: #4caf50; color: white; border: none; cursor: pointer;">Imzo</button>
             @endcan
             <button onclick="closePopup()" style="padding: 10px 20px; background: #f44336; color: white; border: none; cursor: pointer; margin-left: 10px;">Yopish</button>
         </div>
     </div>
+    >
 
     <div style="display: none">
         <form action="" method="POST" id="frm">
@@ -146,22 +147,27 @@
             document.getElementById("popup-room").textContent = data.room;
             document.getElementById("popup-description").textContent = data.description;
             document.getElementById("popup-create").textContent = data.created_at;
-            document.getElementById("imzo").setAttribute('data', data.id);
 
-            // Pop-upni ko'rsatish
+            // Tugma mavjud bo'lsa, unga tegishli ma'lumotni yuklang
+            const imzoBtn = document.getElementById("imzo");
+            if (imzoBtn) {
+                imzoBtn.setAttribute('data', data.id);
+
+                if (data.confirm === 1) {
+                    imzoBtn.textContent = 'Imzolangan';
+                    imzoBtn.disabled = true;
+                    imzoBtn.style.pointerEvents = 'none';
+                } else {
+                    imzoBtn.textContent = 'Imzolash';
+                    imzoBtn.disabled = false;
+                    imzoBtn.style.pointerEvents = 'auto';
+                }
+            }
+
+            // Popapni ko'rsatish
             document.getElementById("popup").style.display = "block";
-            var btn = document.getElementById('imzo');
-            if (data.confirm === 1){
-                btn.textContent = 'Imzolangan';
-                btn.disabled = true;
-                btn.style.pointerEvents = 'none';
-            }
-            else {
-                btn.textContent = 'Imzolash';
-                btn.disabled = false;
-                btn.style.pointerEvents = 'auto'
-            }
         }
+
 
         function closePopup() {
             document.getElementById("popup").style.display = "none";
