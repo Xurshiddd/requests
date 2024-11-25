@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class RequestController extends Controller
 {
@@ -53,6 +54,21 @@ class RequestController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            $message = "Yangi so'rovnoma:\nBino: {$request->building}\nQavat : {$request->floor}\nxona: {$request->room}\nMazmuni: {$request->description}";
+            $bot_token = env('TELEGRAM_BOT_TOKEN');
+            $telegramApiUrl = "https://api.telegram.org/bot{$bot_token}/sendMessage";
+
+            $chat_id = env('TELEGRAM_CHAT_ID');
+            $response = Http::withoutVerifying()->post($telegramApiUrl, [
+                'chat_id' => $chat_id,
+                'text' => $message,
+            ]);
+
+            if ($response->failed()) {
+                Log::error($response->json());
+            }
+
             return redirect()->route('dashboard')->with('success', 'So\'rovnoma muvofaqiyatli jo\'natildi');
         }catch (\Exception $exception){
             return redirect()->route('dashboard')->with('errors', $exception->getMessage());
