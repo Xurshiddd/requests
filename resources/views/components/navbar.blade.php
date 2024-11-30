@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
         </button>
         <div class="navbar-brand">
-            <a href="/"><img src="{{asset('uz.png')}}" style="max-width: 190px;" alt="logo"></a>
+            <a href="/"><img src="/uz.png" style="max-width: 190px;" alt="logo"></a>
         </div>
     </div>
 
