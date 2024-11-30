@@ -7,8 +7,7 @@
             <span class="icon-bar"></span>
         </button>
         <div class="navbar-brand">
-            <img src="https://ttysi.uz/assets/public/images/logo_black.svg" alt="icon" style="max-width: 50px">
-            <a href="/"><img src="https://ttysi.uz/assets/public/images/logo/logo-text.svg" style="max-width: 170px" alt="logo"></a>
+            <a href="/"><img src="{{asset('uz.png')}}" style="max-width: 190px;" alt="logo"></a>
         </div>
     </div>
 
