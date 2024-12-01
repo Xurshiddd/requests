@@ -103,7 +103,7 @@
             <button onclick="closePopup()" style="padding: 10px 20px; background: #f44336; color: white; border: none; cursor: pointer; margin-left: 10px;">Yopish</button>
         </div>
     </div>
-    >
+
 
     <div style="display: none">
         <form action="" method="POST" id="frm">
