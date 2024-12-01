@@ -44,6 +44,14 @@ class FilterRepository extends Controller
                 ]);
             }
             DB::table('requests')->where('id', $request->id)->update(['status' => $request->status]);
+            DB::table('audits')->insert([
+                'user_id' => auth()->id(),
+                'event' => $request->status,
+                'auditable_type' => 'App\Models\Request',
+                'auditable_id' => $request->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
             return response()->json([
                 'success' => true,
                 'message' => 'Request status updated successfully'
